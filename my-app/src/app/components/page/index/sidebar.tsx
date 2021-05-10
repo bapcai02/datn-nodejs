@@ -1,4 +1,11 @@
 import  React  from 'react';
+import { 
+    BrowserRouter,
+    Switch,
+    Link,
+    NavLink
+} from 'react-router-dom';
+
 
 function SideBar(){
     return (
@@ -18,9 +25,9 @@ function SideBar(){
                         </a>
                     </li>
                     <li>
-                        <a href="icons.html">
-                        <i className="zmdi zmdi-invert-colors" /> <span>UI Icons</span>
-                        </a>
+                        <NavLink to = "/product">
+                            <i className="zmdi zmdi-invert-colors" /> <span>Manage Products</span>
+                        </NavLink>
                     </li>
                     <li>
                         <a href="forms.html">
