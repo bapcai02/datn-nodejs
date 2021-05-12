@@ -8,6 +8,7 @@ import {
 import ProductPage  from '../components/page/product/product';
 import HomePage from '../components/page/index/index';
 import LoginPage from '../components/auth/login';
+import UserPage from '../components/page/user/user';
 
 export default function App()
 {
@@ -17,6 +18,7 @@ export default function App()
         <Route exact path="/" component={HomePage} />
         <Route path="/auth/login" component={LoginPage} />
         <Route path="/product" component = {ProductPage} />
+        <Route path="/user" component = {UserPage} />
       </Switch>
     </div> 
   )
