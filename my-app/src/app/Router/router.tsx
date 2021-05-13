@@ -8,7 +8,7 @@ import {
 import ProductPage  from '../components/page/product/product';
 import HomePage from '../components/page/index/index';
 import LoginPage from '../components/auth/login';
-import UserPage from '../components/page/user/user';
+import UserPage from '../components/page/user/user.page';
 
 export default function App()
 {

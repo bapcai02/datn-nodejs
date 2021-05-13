@@ -9,6 +9,9 @@ User.propsTypes = {
 
 export default function User(props:any){
 
+    const dispatch = useDispatch();
+    console.log(dispatch);
+
     return (
         <div>
             <SideBar/>
