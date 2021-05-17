@@ -1,16 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../index/header';
 import SideBar from '../index/sidebar';
 import {useSelector, useDispatch} from 'react-redux';
-
-User.propsTypes = {
-
-};
+import { unwrapResult } from '@reduxjs/toolkit';
+import { getAll, addUser} from '../../../Store/useSlice';
 
 export default function User(props:any){
-
+    const state = useSelector(state => state.users);
+    console.log(state);
     const dispatch = useDispatch();
-    console.log(dispatch);
+    useEffect( () => {
+        const fetchUsertList = async () => {
+            try{
+                const actionResult = await dispatch(getAll());
+                const currentUser = unwrapResult(actionResult);
+                console.log(currentUser);
+            }catch(error) {
+                console.log(error);
+            }
+        };
+        const AddUser = async () => {
+            try{
+                const action = addUser('123');
+                dispatch(action);
+            }catch(error){
+                console.log(error);
+            }
+        }
+        fetchUsertList();
+        AddUser();
+    }, []);
 
     return (
         <div>
