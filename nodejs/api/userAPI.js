@@ -22,6 +22,7 @@ exports.index = async(req, res, next) => {
 
 exports.update = async(req, res, next) => {
     const data = req.body;
+    res.header("Access-Control-Allow-Origin", "*");
     if (data.name && data.email && data.password && data.id) {
         body('email').isEmail().normalizeEmail().withMessage('email not ');
         body('password').isLength({ min: 5 }).withMessage('must be at least 5 chars long');
