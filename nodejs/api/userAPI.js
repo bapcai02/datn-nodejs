@@ -22,7 +22,7 @@ exports.index = async(req, res, next) => {
 
 exports.update = async(req, res, next) => {
     const data = req.body;
-    if (data.name || data.id || data.email || data.password) {
+    if (data.name && data.email && data.password && data.id) {
         body('email').isEmail().normalizeEmail().withMessage('email not ');
         body('password').isLength({ min: 5 }).withMessage('must be at least 5 chars long');
         var salt = await bcrypt.genSalt(10);

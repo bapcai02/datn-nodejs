@@ -3,15 +3,14 @@ import userApi from "../api/UserAPI";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 export const getAll = createAsyncThunk('user/getAll', async (params:any, thunkAPI:any) => {
-  // thunkAPI.dispatch(...)
-  const currentUser = await userApi.getAll();
-  return currentUser;
+  return await userApi.getAll();
 });
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    current: {},
+    list: [],
+    status: null,
   },
   reducers: {
       addUser: (state:any, action:any) => {
@@ -19,8 +18,17 @@ const userSlice = createSlice({
       }
   },
   extraReducers: {
+    [getAll.pending]: (state:any, action:any) => {
+      state.status = 'loading';
+    },
+
     [getAll.fulfilled]: (state:any, action:any) => {
-      state.current = action.payload;
+      state.list = action.payload;
+      state.status = 'success';
+    },
+
+    [getAll.rejected]: (state:any, action:any) => {
+      state.status = 'failed';
     },
   }
 });

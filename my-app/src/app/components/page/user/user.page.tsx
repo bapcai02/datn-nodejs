@@ -5,38 +5,32 @@ import {useSelector, useDispatch} from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { getAll, addUser} from '../../../Store/useSlice';
 
-export default function User(props:any){
-    const state = useSelector(state => state.users);
-    console.log(state);
+export default function User(props:any) 
+{
     const dispatch = useDispatch();
     useEffect( () => {
         const fetchUsertList = async () => {
             try{
                 const actionResult = await dispatch(getAll());
                 const currentUser = unwrapResult(actionResult);
-                console.log(currentUser);
             }catch(error) {
                 console.log(error);
             }
         };
-        const AddUser = async () => {
-            try{
-                const action = addUser('123');
-                dispatch(action);
-            }catch(error){
-                console.log(error);
-            }
-        }
         fetchUsertList();
-        AddUser();
     }, []);
 
+    const Add = async () => {
+        const action = addUser('123');
+        dispatch(action);
+    }
     return (
         <div>
             <SideBar/>
             <Header/>
             <div className="clearfix" />
             <div className="content-wrapper">
+            <button onClick = {Add}>laooaosd</button>
                 <div className="col-md-12 ">
                     <form method="GET">
                     <div className="row">

@@ -7,18 +7,10 @@ const sequelize = new Sequelize(
         host: process.env.DB_HOST,
         dialect: 'mysql'
     });
-const { Model, DataTypes } = require('sequelize');
-
 
 try {
-
     sequelize.authenticate();
     console.log('Connection has been established successfully.');
-    User.findAll()
-        .then(users => {
-            console.log(users);
-        })
-
 } catch (error) {
     console.error('Unable to connect to the database:', error);
 }
