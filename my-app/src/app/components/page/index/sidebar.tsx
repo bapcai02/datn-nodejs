@@ -30,9 +30,9 @@ function SideBar(){
                         </NavLink>
                     </li>
                     <li>
-                        <a href="forms.html">
-                        <i className="zmdi zmdi-format-list-bulleted" /> <span>Forms</span>
-                        </a>
+                        <NavLink to = "/user">
+                            <i className="zmdi zmdi-format-list-bulleted" /> <span>Manage Users</span>
+                        </NavLink>
                     </li>
                     <li>
                         <a href="tables.html">

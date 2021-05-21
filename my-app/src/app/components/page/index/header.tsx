@@ -1,4 +1,3 @@
-import React from 'react';
 
 function Header (){
     return (
@@ -6,14 +5,14 @@ function Header (){
             <nav className="navbar navbar-expand fixed-top">
             <ul className="navbar-nav mr-auto align-items-center">
                 <li className="nav-item">
-                <a className="nav-link toggle-menu" href="javascript:void();">
+                <a className="nav-link toggle-menu">
                     <i className="icon-menu menu-icon" />
                 </a>
                 </li>
                 <li className="nav-item">
                 <form className="search-bar">
                     <input type="text" className="form-control" placeholder="Enter keywords" />
-                    <a href="javascript:void();"><i className="icon-magnifier" /></a>
+                    <a><i className="icon-magnifier" /></a>
                 </form>
                 </li>
             </ul>
@@ -41,7 +40,7 @@ function Header (){
                 </a>
                 <ul className="dropdown-menu dropdown-menu-right">
                     <li className="dropdown-item user-details">
-                    <a href="javaScript:void();">
+                    <a>
                         <div className="media">
                         <div className="avatar"><img className="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar" /></div>
                         <div className="media-body">

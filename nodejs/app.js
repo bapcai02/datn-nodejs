@@ -1,6 +1,7 @@
 require('dotenv').config();
 require('./app/models/mysql');
 
+var cors = require('cors')
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -13,6 +14,7 @@ var multer = require('multer');
 var indexRouter = require('./routes/index');
 
 var app = express();
+app.use(cors())
 var upload = multer();
 
 // view engine setup

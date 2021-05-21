@@ -1,12 +1,27 @@
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { getAll, addUser} from '../../../Store/useSlice';
-import React, { useEffect, useState } from 'react';
+import { getAll, createUser} from '../../../Store/useSlice';
+import { useEffect, useState } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
+
+import './style.css';
+import { RootState } from '../../../Store/store';
 
 export default function Table(props:any)
 {
     const [userList, setUser] = useState([]);
+    const [editModal, setEditModal] = useState(false);
+    const [newModal, setNewModal] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [editUser, setEditUser] = useState<any>();
+    const [email, setEmail] = useState<string>();
+    const [name, setName] = useState<string>();
+    const [newEmail, setNewEmail] = useState<string>();
+    const [newName, setNewName] = useState<string>();
+    const [newPassword, setNewPassword] = useState<string>();
+    const [newRole, setNewRole] = useState<string>();
     const dispatch = useDispatch();
+
     useEffect( () => {
         const fetchUsertList = async () => {
             try{
@@ -20,17 +35,156 @@ export default function Table(props:any)
         fetchUsertList();
     }, []);
 
-    const Add = async (value: any) => {
-        const action = addUser(value);
-        dispatch(action);
+    // on/off modal
+    const handleClose = () => setEditModal(false);
+    const handleShow = () => setEditModal(true);
+
+    const newHandleClose = () => setNewModal(false);
+    const newHandleShow = () => setNewModal(true);
+
+    const deleteHandleClose = () => setDeleteModal(false);
+    const deleteHandleShow = () => setDeleteModal(true);
+
+    // edit user
+    const showModalEditUser = async (value:any) => {
+        handleShow();
+        const data = userList.find( ({id}) => id === value);
+        setEditUser(data);
+    }
+    // console.log(userList);
+ 
+    const EditUser = async (event:any) => {
+        event.preventDefault();
+        handleClose();
     }
 
-    const EditUser = async (value:any) => {
-        console.log('object');
+    //new user
+    const NewUser = async (event:any) => {
+        event.preventDefault();
+        const data = JSON.stringify({
+            "email": newEmail,
+            "name": newName,
+            "password": newPassword,
+            "role_id" : newRole
+        });
+
+        await dispatch(createUser(data));
+
+        newHandleClose();
     }
 
     return (
         <div className="container-fluid"> 
+            
+            <Modal className="special_modal" show={editModal} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Chỉnh sửa thông tin </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={(e) => EditUser(e)}>
+                        <Form.Group controlId="formEmail">
+                            <Form.Label>Email *</Form.Label>
+                            <Form.Control 
+                                required 
+                                onChange= {(e) => setEmail(e.currentTarget.value)} 
+                                defaultValue = { editUser?.email }  
+                                type="email" 
+                                placeholder="Enter email" 
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group controlId="formName">
+                            <Form.Label>Tên *</Form.Label>
+                            <Form.Control 
+                                required  
+                                onChange= {(e) => setName(e.currentTarget.value)} 
+                                defaultValue={ editUser?.name }  
+                                type="text" 
+                                placeholder="Tên" 
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>Close</Button>
+                            <Button variant="primary" type="submit">Save Changes</Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal.Body>     
+            </Modal>
+         
+            <Modal className="special_modal2" show={newModal} onHide={newHandleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Thêm mới </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={(e) => NewUser(e)}>
+                        <Form.Group controlId="formEmail">
+                            <Form.Label>Email *</Form.Label>
+                            <Form.Control 
+                                required 
+                                onChange= {(e) => setNewEmail(e.currentTarget.value)}  
+                                type="email" 
+                                placeholder="Enter email" 
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group controlId="formName">
+                            <Form.Label>Tên *</Form.Label>
+                            <Form.Control 
+                                required  
+                                onChange= {(e) => setNewName(e.currentTarget.value)} 
+                                type="text" 
+                                placeholder="Tên" 
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group controlId="formPassword">
+                            <Form.Label>Password *</Form.Label>
+                            <Form.Control 
+                                required 
+                                onChange= {(e) => setNewPassword(e.currentTarget.value)}  
+                                type="password" 
+                                placeholder="Enter password" 
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group controlId="formRole">
+                            <Form.Label>Role *</Form.Label>
+                            <Form.Control as="select" required onChange= {(e) => setNewRole(e.currentTarget.value)}  >
+                                <option value = '0'>Chọn quyền</option>
+                                <option value = '0'>User</option>
+                                <option value = '1'>Customer</option>
+                                <option value = '2'>Admin</option>
+                            </Form.Control>
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={newHandleClose}>Close</Button>
+                            <Button variant="primary" type="submit">Save Changes</Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+
+            <Modal className="special_modal3" show={deleteModal} onHide={deleteHandleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xóa người dùng</Modal.Title>
+                </Modal.Header>
+                    <Modal.Body>bạn có muốn xóa người dùng !</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={deleteHandleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={deleteHandleClose}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <div className="row ">
                 <div className="col-md-12">
                     <div className="card">
@@ -38,13 +192,12 @@ export default function Table(props:any)
                             <div className="table-responsive">
                             <div className="row mb-3">
                                 <div className="col-12">
-                                    <a className="btn btn-success btn-sm js-btn-add"
+                                    <Button 
+                                        onClick = {newHandleShow} 
+                                        className="btn btn-success btn-sm js-btn-add"
                                         type="button">
-                                    <span>
-                                        <i className="fa fa-plus mr-1"></i>
-                                        Thêm mới người dùng
-                                    </span>
-                                    </a>
+                                        <span><i className="fa fa-plus mr-1"></i>Thêm mới người dùng</span>
+                                    </Button>
                                 </div>
                             </div>
                                 <table id="dt-basic-example" className="table table-bordered table-hover table-striped w-100">
@@ -53,8 +206,8 @@ export default function Table(props:any)
                                             <th>#</th>
                                             <th>Tên người dùng</th>
                                             <th>Email</th>
-                                            <th>Phân Loại người dùng</th>
-                                            <th></th>
+                                            <th>Phân loại người dùng</th>
+                                            <th>Thao tác</th>
                                         </tr>
                                     </thead>
                                     {userList.map((value:any, key: number) => {
@@ -65,8 +218,8 @@ export default function Table(props:any)
                                                     <td>{value.email}</td>
                                                     <td>{value.role_id}</td>
                                                     <td className="text-center">
-                                                        <button onClick = {EditUser} ><i className="fa fa-times"></i></button>
-                                                        <button><i className="fa fa-edit"></i></button>
+                                                        <Button  onClick = {deleteHandleShow} className="btn btn-sm btn-danger btn-icon btn-inline-block mr-1 waves-effect waves-themed"><i className="fa fa-times"></i></Button>
+                                                        <Button  onClick = {() => showModalEditUser(value.id)}  className="btn btn-sm btn-primary btn-icon btn-inline-block mr-1"><i className="fa fa-edit"></i></Button>
                                                     </td>
                                             </tbody>
                                         )

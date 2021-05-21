@@ -22,10 +22,7 @@ exports.index = async(req, res, next) => {
 
 exports.update = async(req, res, next) => {
     const data = req.body;
-    res.header("Access-Control-Allow-Origin", "*");
     if (data.name && data.email && data.password && data.id) {
-        body('email').isEmail().normalizeEmail().withMessage('email not ');
-        body('password').isLength({ min: 5 }).withMessage('must be at least 5 chars long');
         var salt = await bcrypt.genSalt(10);
         var hash = await bcrypt.hash(data.password, salt);
         // var res = bcrypt.compareSync('B4c0/\/', hash)
@@ -43,14 +40,13 @@ exports.update = async(req, res, next) => {
     } else {
         res.status(400).json('data is not valid');
     }
-
 }
 
 exports.create = async(req, res, next) => {
     const data = req.body;
+    res.status(200).json(data);
     if (data.name && data.role_id && data.email && data.password) {
-        body('email').isEmail().normalizeEmail().withMessage('email not ');
-        body('password').isLength({ min: 5 }).withMessage('must be at least 5 chars long');
+        
         var salt = await bcrypt.genSalt(10);
         var hash = await bcrypt.hash(data.password, salt);
         // var res = bcrypt.compareSync('B4c0/\/', hash)

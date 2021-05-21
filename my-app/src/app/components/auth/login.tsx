@@ -1,4 +1,3 @@
-import { isFulfilled } from '@reduxjs/toolkit';
 import React, { useEffect, useState} from 'react';
 
 function emailValidate(email: string) : void {
