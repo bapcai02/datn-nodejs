@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "../Store/useSlice";
+import tinhtpSlice from "../Store/tinhtpSlice";
 
 const store = configureStore({
   reducer: {
     users: userReducer,
-
+    tinhtp: tinhtpSlice
   },
 });
 

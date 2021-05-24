@@ -21,6 +21,7 @@ router.post('/api/v1/user', userApi.index);
 router.post('/api/v1/user/create', userApi.create);
 router.post('/api/v1/user/update', userApi.update);
 router.post('/api/v1/user/delete', userApi.delete);
+router.post('/api/v1/user/search', userApi.search);
 
 /** quan huyen api */
 router.post('/api/v1/quanhuyen', quanHuyenApi.index);
@@ -34,7 +35,7 @@ router.post('/api/v1/xaphuong/create', xaPhuongApi.create);
 router.post('/api/v1/xaphuong/update', xaPhuongApi.update);
 router.post('/api/v1/xaphuong/delete', xaPhuongApi.delete);
 
-/** xa phuong thi tran api */
+/** xa phuong tinhtp api */
 router.post('/api/v1/tinhtp', tinhTpApi.index);
 router.post('/api/v1/tinhtp/create', tinhTpApi.create);
 router.post('/api/v1/tinhtp/update', tinhTpApi.update);

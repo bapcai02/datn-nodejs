@@ -1,48 +1,48 @@
-import userApi from "../api/UserAPI";
+import tinhtpApi from "../api/tinhtpAPI";
 
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
-export const getAll = createAsyncThunk('user/getAll', async (params:any, thunkAPI:any) => {
+export const getAll = createAsyncThunk('tinhtp/getAll', async (params:any, thunkAPI:any) => {
   try{
-    return await userApi.getAll();
+    return await tinhtpApi.getAll();
   }catch(exception) {
     console.log(exception);
   }
 });
 
-export const createUser = createAsyncThunk('user/create', async (params:any, thunkAPI:any) => {
+export const createTinhTp = createAsyncThunk('tinhtp/create', async (params:any, thunkAPI:any) => {
   try {
-    return await userApi.create(params);
+    return await tinhtpApi.create(params);
   }catch(exception) {
     console.log(exception);
   }
 });
 
-export const deleteUser = createAsyncThunk('user/delete', async (params:any, thunkAPI:any) => {
+export const deleteTinhTp = createAsyncThunk('tinhtp/delete', async (params:any, thunkAPI:any) => {
   try {
-    return await userApi.delete(params);
+    return await tinhtpApi.delete(params);
   }catch(exception) {
     console.log(exception);
   }
 });
 
-export const updateUser = createAsyncThunk('user/update', async (params:any, thunkAPI:any) => {
+export const updateTinhTp= createAsyncThunk('tinhtp/update', async (params:any, thunkAPI:any) => {
   try {
-    return await userApi.update(params);
+    return await tinhtpApi.update(params);
   }catch(exception) {
     console.log(exception);
   }
 });
 
-export const searchUser = createAsyncThunk('user/search', async (params:any, thunkAPI:any) => {
+export const searchTinhTp = createAsyncThunk('tinhtp/search', async (params:any, thunkAPI:any) => {
   try {
-    return await userApi.search(params);
+    return await tinhtpApi.search(params);
   }catch(exception) {
     console.log(exception);
   }
 });
 
-const userSlice = createSlice({
+const tinhtpSlice = createSlice({
   name: 'user',
   initialState: {
     list: [],
@@ -67,22 +67,22 @@ const userSlice = createSlice({
     },
 
     //create user
-    [createUser.pending]: (state:any, action:any) => {
+    [createTinhTp.pending]: (state:any, action:any) => {
       state.status = 'loading';
     },
-    [createUser.fulfilled]: (state:any, action:any) => {
+    [createTinhTp.fulfilled]: (state:any, action:any) => {
       state.list.push(action.payload);
       state.status = 'success';
     },
-    [createUser.rejected]: (state:any, action:any) => {
+    [createTinhTp.rejected]: (state:any, action:any) => {
       state.status = 'failed';
     },
 
     //delete user
-    [deleteUser.pending]: (state:any, action:any) => {
+    [deleteTinhTp.pending]: (state:any, action:any) => {
       state.status = 'loading';
     },
-    [deleteUser.fulfilled]: (state:any, action:any) => {
+    [deleteTinhTp.fulfilled]: (state:any, action:any) => {
       const value = state.list.filter((obj: any) => {
         return obj.id !== (action.payload)[0].id
       });
@@ -90,24 +90,24 @@ const userSlice = createSlice({
       state.list.push((action.payload)[0])
       state.status = 'success';
     },
-    [deleteUser.rejected]: (state:any, action:any) => {
+    [deleteTinhTp.rejected]: (state:any, action:any) => {
       state.status = 'failed';
     },
 
      //search user
-     [searchUser.pending]: (state:any, action:any) => {
+     [searchTinhTp.pending]: (state:any, action:any) => {
       state.status = 'loading';
     },
-    [searchUser.fulfilled]: (state:any, action:any) => {
+    [searchTinhTp.fulfilled]: (state:any, action:any) => {
       state.list = action.payload;
       state.status = 'success';
     },
-    [searchUser.rejected]: (state:any, action:any) => {
+    [searchTinhTp.rejected]: (state:any, action:any) => {
       state.status = 'failed';
     },
   }
 });
 
-const { reducer, actions } = userSlice;
+const { reducer, actions } = tinhtpSlice;
 export const { addUser } = actions;
 export default reducer;

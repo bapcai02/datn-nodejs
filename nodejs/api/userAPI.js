@@ -1,5 +1,5 @@
 const sequelize = require('../app/models/mysql');
-const { Model, DataTypes, ExclusionConstraintError } = require('sequelize');
+const { Model, DataTypes, ExclusionConstraintError, Op } = require('sequelize');
 const { databaseVersion } = require('../app/models/mysql');
 const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
@@ -23,16 +23,16 @@ exports.index = async(req, res, next) => {
 exports.update = async(req, res, next) => {
     const data = req.body;
     if (data.name && data.email && data.id) {
-        try{
-            console.log(data)
+        try {
             await User.update({
                 name: data.name,
                 email: data.email,
-            }, { where: { id: data.id }
+            }, {
+                where: { id: data.id }
             });
-            const user = await User.findAll({where: {id: data.id}});
+            const user = await User.findAll({ where: { id: data.id } });
             res.status(200).json(user);
-        }catch(ExclusionConstraintError){
+        } catch (ExclusionConstraintError) {
             res.status(400).json(ExclusionConstraintError);
         }
     } else {
@@ -43,7 +43,6 @@ exports.update = async(req, res, next) => {
 exports.create = async(req, res, next) => {
     const data = req.body;
     if (data.name && data.role_id && data.email && data.password) {
-        
         var salt = await bcrypt.genSalt(10);
         var hash = await bcrypt.hash(data.password, salt);
         // var res = bcrypt.compareSync('B4c0/\/', hash)
@@ -65,7 +64,6 @@ exports.create = async(req, res, next) => {
 exports.delete = async(req, res, next) => {
     const data = req.body;
     if (data.id) {
-        console.log(data)
         await User.destroy({
             where: {
                 id: data.id
@@ -77,5 +75,22 @@ exports.delete = async(req, res, next) => {
         });
     } else {
         res.status(400).json('data is not valid');
+    }
+}
+
+exports.search = async(req, res, next) => {
+    try {
+        const data = req.body;
+        const user = await User.findAll({
+            where: {
+                [Op.or]: [{
+                    'name': data.name
+                }, { 'email': data.email }]
+
+            }
+        });
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json('failse')
     }
 }

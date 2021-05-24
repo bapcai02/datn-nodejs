@@ -1,5 +1,4 @@
 import { useSelector, useDispatch} from 'react-redux';
-import { unwrapResult } from '@reduxjs/toolkit';
 import { getAll, createUser, deleteUser, updateUser} from '../../../Store/useSlice';
 import { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
@@ -223,7 +222,7 @@ export default function Table(props:any)
                                             <th>Thao tác</th>
                                         </tr>
                                     </thead>
-                                    {data.list.map((value:any, key: number) => {
+                                    { data.list.map((value:any, key: number) => {
                                         return (
                                                 <tbody> 
                                                     <td>{key+1}</td>   

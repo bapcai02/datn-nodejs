@@ -35,9 +35,9 @@ function SideBar(){
                         </NavLink>
                     </li>
                     <li>
-                        <a href="tables.html">
-                        <i className="zmdi zmdi-grid" /> <span>Tables</span>
-                        </a>
+                        <NavLink to = "/tinhtp">
+                            <i className="zmdi zmdi-grid" /> <span>Manage Tinh Thanh Pho</span>
+                        </NavLink>
                     </li>
                     <li>
                         <a href="calendar.html">

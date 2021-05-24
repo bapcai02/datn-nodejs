@@ -39,6 +39,15 @@ const userApi = {
             swal("delete false!", "delete user false. check again!", "error");
             console.log(response);
         }
+    },
+
+    search: async (params: any) => {
+        try{
+            return await axiosClient.post('/user/search', {...params})
+        } catch(response) {
+            swal("search false!", "search user false. check again!", "error");
+            console.log(response);
+        }
     }
 }
   
