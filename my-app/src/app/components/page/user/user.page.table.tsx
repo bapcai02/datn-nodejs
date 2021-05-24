@@ -1,15 +1,13 @@
 import { useSelector, useDispatch} from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { getAll, createUser} from '../../../Store/useSlice';
+import { getAll, createUser, deleteUser, updateUser} from '../../../Store/useSlice';
 import { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-
-import './style.css';
 import { RootState } from '../../../Store/store';
+import './style.css';
 
 export default function Table(props:any)
 {
-    const [userList, setUser] = useState([]);
     const [editModal, setEditModal] = useState(false);
     const [newModal, setNewModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
@@ -20,14 +18,15 @@ export default function Table(props:any)
     const [newName, setNewName] = useState<string>();
     const [newPassword, setNewPassword] = useState<string>();
     const [newRole, setNewRole] = useState<string>();
+    const [userId, setUserId] = useState<number>(0);
     const dispatch = useDispatch();
+    const data:any = useSelector((state: RootState) => state?.users);
 
+    // useEffect
     useEffect( () => {
         const fetchUsertList = async () => {
             try{
-                const actionResult = await dispatch(getAll());
-                const currentUser = unwrapResult(actionResult);
-                setUser(currentUser);
+                await dispatch(getAll());
             }catch(error) {
                 console.log(error);
             }
@@ -46,30 +45,44 @@ export default function Table(props:any)
     const deleteHandleShow = () => setDeleteModal(true);
 
     // edit user
-    const showModalEditUser = async (value:any) => {
+    const showModalEditUser = async (value:number) => {
         handleShow();
-        const data = userList.find( ({id}) => id === value);
-        setEditUser(data);
+        const userList: any = data.list;
+        const user = userList.find( (u: any) => u.id === value);
+        setEditUser(user);
     }
-    // console.log(userList);
  
     const EditUser = async (event:any) => {
         event.preventDefault();
+        const data = {
+            "id": editUser.id,
+            "name": name ? name : editUser.name,
+            "email": email ? email: editUser.email
+        }
+        await dispatch(updateUser(data));
         handleClose();
+    }
+
+    // delete user 
+    const DropUser = async (id:number) => {
+        const data = {
+            "id": id
+        };
+        deleteHandleClose();
+        await dispatch(deleteUser(data));
+        
     }
 
     //new user
     const NewUser = async (event:any) => {
         event.preventDefault();
-        const data = JSON.stringify({
+        const data = {
             "email": newEmail,
             "name": newName,
             "password": newPassword,
             "role_id" : newRole
-        });
-
+        };
         await dispatch(createUser(data));
-
         newHandleClose();
     }
 
@@ -180,7 +193,7 @@ export default function Table(props:any)
                     <Button variant="secondary" onClick={deleteHandleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={deleteHandleClose}>
+                    <Button variant="primary" onClick={() => DropUser(userId)}>
                         Delete
                     </Button>
                 </Modal.Footer>
@@ -210,7 +223,7 @@ export default function Table(props:any)
                                             <th>Thao tác</th>
                                         </tr>
                                     </thead>
-                                    {userList.map((value:any, key: number) => {
+                                    {data.list.map((value:any, key: number) => {
                                         return (
                                                 <tbody> 
                                                     <td>{key+1}</td>   
@@ -218,7 +231,7 @@ export default function Table(props:any)
                                                     <td>{value.email}</td>
                                                     <td>{value.role_id}</td>
                                                     <td className="text-center">
-                                                        <Button  onClick = {deleteHandleShow} className="btn btn-sm btn-danger btn-icon btn-inline-block mr-1 waves-effect waves-themed"><i className="fa fa-times"></i></Button>
+                                                        <Button  onClick = {() => {deleteHandleShow();setUserId(value.id)}}  className="btn btn-sm btn-danger btn-icon btn-inline-block mr-1 waves-effect waves-themed"><i className="fa fa-times"></i></Button>
                                                         <Button  onClick = {() => showModalEditUser(value.id)}  className="btn btn-sm btn-primary btn-icon btn-inline-block mr-1"><i className="fa fa-edit"></i></Button>
                                                     </td>
                                             </tbody>

@@ -22,21 +22,19 @@ exports.index = async(req, res, next) => {
 
 exports.update = async(req, res, next) => {
     const data = req.body;
-    if (data.name && data.email && data.password && data.id) {
-        var salt = await bcrypt.genSalt(10);
-        var hash = await bcrypt.hash(data.password, salt);
-        // var res = bcrypt.compareSync('B4c0/\/', hash)
-        await User.update({
-            'name': data.name,
-            'email': data.email,
-            'password': hash
-        }, {
-            where: { id: data.id }
-        }).then(user => {
+    if (data.name && data.email && data.id) {
+        try{
+            console.log(data)
+            await User.update({
+                name: data.name,
+                email: data.email,
+            }, { where: { id: data.id }
+            });
+            const user = await User.findAll({where: {id: data.id}});
             res.status(200).json(user);
-        }).catch(ExclusionConstraintError => {
+        }catch(ExclusionConstraintError){
             res.status(400).json(ExclusionConstraintError);
-        })
+        }
     } else {
         res.status(400).json('data is not valid');
     }
@@ -44,7 +42,6 @@ exports.update = async(req, res, next) => {
 
 exports.create = async(req, res, next) => {
     const data = req.body;
-    res.status(200).json(data);
     if (data.name && data.role_id && data.email && data.password) {
         
         var salt = await bcrypt.genSalt(10);
@@ -68,12 +65,13 @@ exports.create = async(req, res, next) => {
 exports.delete = async(req, res, next) => {
     const data = req.body;
     if (data.id) {
+        console.log(data)
         await User.destroy({
             where: {
                 id: data.id
             }
         }).then(user => {
-            res.status(200).json("delete success");
+            res.status(200).json(data.id);
         }).catch(ExclusionConstraintError => {
             res.status(400).json(ExclusionConstraintError);
         });
