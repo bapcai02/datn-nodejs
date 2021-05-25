@@ -7,6 +7,7 @@ import HomePage from '../components/page/index/index';
 import LoginPage from '../components/auth/login';
 import UserPage from '../components/page/user/user.page';
 import TinhTp from '../components/page/tinhthanhpho/tinhtp.page';
+import QuanHuyen from '../components/page/quanhuyen/quanhuyen.page';
 
 export default function App()
 {
@@ -18,6 +19,7 @@ export default function App()
         <Route path="/product" component = {ProductPage} />
         <Route path="/user" component = {UserPage} />
         <Route path="/tinhtp" component = {TinhTp} />
+        <Route path="/quanhuyen" component = {QuanHuyen} />
       </Switch>
     </div> 
   )

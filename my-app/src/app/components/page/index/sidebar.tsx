@@ -40,10 +40,9 @@ function SideBar(){
                         </NavLink>
                     </li>
                     <li>
-                        <a href="calendar.html">
-                        <i className="zmdi zmdi-calendar-check" /> <span>Calendar</span>
-                        <small className="badge float-right badge-light">New</small>
-                        </a>
+                        <NavLink to = "/quanhuyen">
+                            <i className="zmdi zmdi-calendar-check" /> <span>Manage Quan Huyen</span>
+                        </NavLink>
                     </li>
                     <li>
                         <a href="profile.html">
