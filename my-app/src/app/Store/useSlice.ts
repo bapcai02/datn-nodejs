@@ -78,16 +78,34 @@ const userSlice = createSlice({
       state.status = 'failed';
     },
 
+    //update user
+    [updateUser.pending]: (state:any, action:any) => {
+      state.status = 'loading';
+    },
+    [updateUser.fulfilled]: (state:any, action:any) => {
+      const newlist:any = [];
+      state.list.map((obj: any, key:number) => {
+         if(obj.id == (action.payload)[0].id){
+          obj = (action.payload)[0];
+         }
+         newlist.push(obj);
+      });
+      state.list = newlist;
+      state.status = 'success';
+    },
+    [updateUser.rejected]: (state:any, action:any) => {
+      state.status = 'failed';
+    },
+
     //delete user
     [deleteUser.pending]: (state:any, action:any) => {
       state.status = 'loading';
     },
     [deleteUser.fulfilled]: (state:any, action:any) => {
       const value = state.list.filter((obj: any) => {
-        return obj.id !== (action.payload)[0].id
+        return obj.id !== action.payload;
       });
       state.list = value;
-      state.list.push((action.payload)[0])
       state.status = 'success';
     },
     [deleteUser.rejected]: (state:any, action:any) => {

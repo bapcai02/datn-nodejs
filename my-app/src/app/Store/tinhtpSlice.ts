@@ -2,7 +2,7 @@ import tinhtpApi from "../api/tinhtpAPI";
 
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
-export const getAll = createAsyncThunk('tinhtp/getAll', async (params:any, thunkAPI:any) => {
+export const getTinhTp = createAsyncThunk('tinhtp/getAll', async (params:any, thunkAPI:any) => {
   try{
     return await tinhtpApi.getAll();
   }catch(exception) {
@@ -43,30 +43,26 @@ export const searchTinhTp = createAsyncThunk('tinhtp/search', async (params:any,
 });
 
 const tinhtpSlice = createSlice({
-  name: 'user',
+  name: 'tinhtp',
   initialState: {
     list: [],
     status: null,
   },
-  reducers: {
-      // addUser: (state:any, action:any) => {
-      //   state.list.push(action.payload);
-      // }
-  },
+  reducers: {},
   extraReducers: {
-    // get user
-    [getAll.pending]: (state:any, action:any) => {
+    // get Tinhtp
+    [getTinhTp.pending]: (state:any, action:any) => {
       state.status = 'loading';
     },
-    [getAll.fulfilled]: (state:any, action:any) => {
-      state.list = action.payload;
+    [getTinhTp.fulfilled]: (state:any, action:any) => {
+      state.list = action.payload.data;
       state.status = 'success';
     },
-    [getAll.rejected]: (state:any, action:any) => {
+    [getTinhTp.rejected]: (state:any, action:any) => {
       state.status = 'failed';
     },
 
-    //create user
+    //create Tinhtp
     [createTinhTp.pending]: (state:any, action:any) => {
       state.status = 'loading';
     },
@@ -78,23 +74,41 @@ const tinhtpSlice = createSlice({
       state.status = 'failed';
     },
 
-    //delete user
+    // update Tinhtp
+    [updateTinhTp.pending]: (state:any, action:any) => {
+      state.status = 'loading';
+    },
+    [updateTinhTp.fulfilled]: (state:any, action:any) => {
+      const newlist:any = [];
+      state.list.map((obj: any, key:number) => {
+         if(obj.id == (action.payload)[0].id){
+          obj = (action.payload)[0];
+         }
+         newlist.push(obj);
+      });
+      state.list = newlist;
+      state.status = 'success';
+    },
+    [updateTinhTp.rejected]: (state:any, action:any) => {
+      state.status = 'failed';
+    },
+
+    //delete Tinhtp
     [deleteTinhTp.pending]: (state:any, action:any) => {
       state.status = 'loading';
     },
     [deleteTinhTp.fulfilled]: (state:any, action:any) => {
       const value = state.list.filter((obj: any) => {
-        return obj.id !== (action.payload)[0].id
+        return obj.id !== action.payload;
       });
       state.list = value;
-      state.list.push((action.payload)[0])
       state.status = 'success';
     },
     [deleteTinhTp.rejected]: (state:any, action:any) => {
       state.status = 'failed';
     },
 
-     //search user
+     //search Tinhtp
      [searchTinhTp.pending]: (state:any, action:any) => {
       state.status = 'loading';
     },
@@ -109,5 +123,4 @@ const tinhtpSlice = createSlice({
 });
 
 const { reducer, actions } = tinhtpSlice;
-export const { addUser } = actions;
 export default reducer;

@@ -18,8 +18,44 @@ export default function Table(props:any)
     const [newPassword, setNewPassword] = useState<string>();
     const [newRole, setNewRole] = useState<string>();
     const [userId, setUserId] = useState<number>(0);
+    const [pageNumber, setPageNumber] = useState<number>(0);
+    const [activePage, setActivePage] = useState<number>(1);
     const dispatch = useDispatch();
     const data:any = useSelector((state: RootState) => state?.users);
+
+    //paginate
+    const page = 10;
+    const pagevisit = pageNumber ? pageNumber * page : 0;
+    let pageCount = Math.ceil(data.list.length / page)-1;
+     const display = data.list
+         .slice(pagevisit, page + pagevisit)
+         .map((value:any, key: number) => {
+             return (
+                <tbody> 
+                    <td>{key+1}</td>   
+                    <td>{value.name}</td>
+                    <td>{value.email}</td>
+                    <td>{value.role_id}</td>
+                    <td className="text-center">
+                        <Button  onClick = {() => {deleteHandleShow();setUserId(value.id)}}  className="btn btn-sm btn-danger btn-icon btn-inline-block mr-1 waves-effect waves-themed"><i className="fa fa-times"></i></Button>
+                        <Button  onClick = {() => showModalEditUser(value.id)}  className="btn btn-sm btn-primary btn-icon btn-inline-block mr-1"><i className="fa fa-edit"></i></Button>
+                    </td>
+                </tbody>
+             )
+         });
+ 
+     let jsxItems = [];
+     for (let index = 1; index <= pageCount; index++) {
+         if(index === activePage){
+             jsxItems.push(<a className = "active" onClick = {() => changePage(index)}> {index} </a>);
+         }else{
+             jsxItems.push(<a onClick = {() => changePage(index)}> {index} </a>);
+         }  
+     }
+     const changePage = (selected:number) => {
+        setPageNumber(selected);
+        setActivePage(selected);
+    }
 
     // useEffect
     useEffect( () => {
@@ -44,11 +80,11 @@ export default function Table(props:any)
     const deleteHandleShow = () => setDeleteModal(true);
 
     // edit user
-    const showModalEditUser = async (value:number) => {
-        handleShow();
+    const showModalEditUser = async (value:number) => {     
         const userList: any = data.list;
         const user = userList.find( (u: any) => u.id === value);
         setEditUser(user);
+        handleShow();
     }
  
     const EditUser = async (event:any) => {
@@ -222,21 +258,13 @@ export default function Table(props:any)
                                             <th>Thao tác</th>
                                         </tr>
                                     </thead>
-                                    { data.list.map((value:any, key: number) => {
-                                        return (
-                                                <tbody> 
-                                                    <td>{key+1}</td>   
-                                                    <td>{value.name}</td>
-                                                    <td>{value.email}</td>
-                                                    <td>{value.role_id}</td>
-                                                    <td className="text-center">
-                                                        <Button  onClick = {() => {deleteHandleShow();setUserId(value.id)}}  className="btn btn-sm btn-danger btn-icon btn-inline-block mr-1 waves-effect waves-themed"><i className="fa fa-times"></i></Button>
-                                                        <Button  onClick = {() => showModalEditUser(value.id)}  className="btn btn-sm btn-primary btn-icon btn-inline-block mr-1"><i className="fa fa-edit"></i></Button>
-                                                    </td>
-                                            </tbody>
-                                        )
-                                    })}
+                                    { display } 
                                 </table>
+                                <div className="pagination">
+                                    <a>&laquo;</a>
+                                    {jsxItems}
+                                    <a>&raquo;</a>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,9 +1,10 @@
-import Table from './tinhtp.page.table';
-import Search from './tinhtp.page.search';
+import React from 'react';
 import Header from '../index/header';
 import SideBar from '../index/sidebar';
+import Table from '../product/product.page.table';
+import Search from '../product/product.page.search';
 
-export default function TinhTP(props:any){
+export default function Product(){
     return (
         <div>
             <SideBar/>

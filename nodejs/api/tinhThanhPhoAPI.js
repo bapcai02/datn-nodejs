@@ -53,10 +53,7 @@ exports.index = async (req, res, next) => {
                  'name': data.name,
                  'type': data.type,
              }).then(tinhthanh => {
-                 res.status(200).json({
-                     status: 200,
-                     data: tinhthanh
-                 });
+                 res.status(200).json(tinhthanh);
              }).catch(ExclusionConstraintError => {
                  res.status(400).json(ExclusionConstraintError);
              })
@@ -73,20 +70,24 @@ exports.index = async (req, res, next) => {
   * @param {*} next 
   */
  exports.update = async(req, res, next) => {
-     const data = req.body;
-     if (data.name && data.id) {
-         await TinhThanh.update({
-             'name': data.name,
-         }, {
-             where: { id: data.id }
-         }).then(tinhthanh => {
-             res.status(200).json(tinhthanh);
-         }).catch(ExclusionConstraintError => {
-             res.status(400).json(ExclusionConstraintError);
-         })
-     } else {
-         res.status(400).json('data is not valid');
-     }
+    try{
+        const data = req.body;
+        if (data.name && data.id && data.type) {
+            await TinhThanh.update({
+                name: data.name,
+                type: data.type,
+            }, {
+                where: { id: data.id }
+            });
+            const tinhthanh =  await TinhThanh.findAll({ where: { id: data.id } });
+            res.status(200).json(tinhthanh);
+
+        } else {
+            res.status(400).json('data is not valid');
+        }
+    } catch(ExclusionConstraintError){
+        res.status(400).json(ExclusionConstraintError);
+    }
  }
  
  /**
@@ -96,21 +97,33 @@ exports.index = async (req, res, next) => {
   * @param {*} next 
   */
  exports.delete = async(req, res, next) => {
-     const data = req.body;
-     if (data.id) {
-         await TinhThanh.destroy({
-             where: {
-                 id: data.id
-             }
-         }).then(tinhthanh => {
-             res.status(200).json({
-                 message: "delete success",
-                 data: tinhthanh
-             });
-         }).catch(ExclusionConstraintError => {
-             res.status(400).json(ExclusionConstraintError);
-         });
-     } else {
-         res.status(400).json('data is not valid');
+     try{
+        const data = req.body;
+        if (data.id) {
+            await TinhThanh.destroy({
+                where: {
+                    id: data.id
+                }
+            })
+           res.status(200).json(data.id);
+        } else {
+            res.status(400).json('data is not valid');
+        }
+     } catch(ExclusionConstraintError){
+        res.status(400).json(ExclusionConstraintError);
      }
  }
+
+ exports.search = async(req, res, next) => {
+    try {
+        const data = req.body;
+        const tinhtp = await TinhThanh.findAll({
+            where: {
+                'name': data.name
+            }
+        });
+        res.status(200).json(tinhtp);
+    } catch (error) {
+        res.status(400).json('failse')
+    }
+}

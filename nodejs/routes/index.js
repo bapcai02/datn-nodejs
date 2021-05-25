@@ -40,6 +40,7 @@ router.post('/api/v1/tinhtp', tinhTpApi.index);
 router.post('/api/v1/tinhtp/create', tinhTpApi.create);
 router.post('/api/v1/tinhtp/update', tinhTpApi.update);
 router.post('/api/v1/tinhtp/delete', tinhTpApi.delete);
+router.post('/api/v1/tinhtp/search', tinhTpApi.search);
 
 
 

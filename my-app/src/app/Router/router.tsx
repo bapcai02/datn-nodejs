@@ -2,7 +2,7 @@ import {
     Switch,
     Route,
 } from 'react-router-dom';
-import ProductPage  from '../components/page/product/product';
+import ProductPage  from '../components/page/product/product.page';
 import HomePage from '../components/page/index/index';
 import LoginPage from '../components/auth/login';
 import UserPage from '../components/page/user/user.page';
