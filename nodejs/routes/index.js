@@ -9,6 +9,8 @@ var userApi = require('../api/userAPI');
 var quanHuyenApi = require('../api/quanHuyenAPI');
 var xaPhuongApi = require('../api/xaPhuongAPI');
 var tinhTpApi = require('../api/tinhThanhPhoAPI');
+var productApi = require('../api/productAPI');
+var productImageApi = require('../api/productImageAPI');
 
 /* GET home page. */
 router.get('/', HomeController.index);
@@ -22,6 +24,20 @@ router.post('/api/v1/user/create', userApi.create);
 router.post('/api/v1/user/update', userApi.update);
 router.post('/api/v1/user/delete', userApi.delete);
 router.post('/api/v1/user/search', userApi.search);
+
+/** product api */
+router.post('/api/v1/product', productApi.index);
+// router.post('/api/v1/product/create', productApi.create);
+// router.post('/api/v1/product/update', productApi.update);
+// router.post('/api/v1/product/delete', productApi.delete);
+// router.post('/api/v1/product/search', productApi.search);
+
+/** product api */
+router.post('/api/v1/product-image', productImageApi.index);
+// router.post('/api/v1/product/create', productApi.create);
+// router.post('/api/v1/product/update', productApi.update);
+// router.post('/api/v1/product/delete', productApi.delete);
+// router.post('/api/v1/product/search', productApi.search);
 
 /** quan huyen api */
 router.post('/api/v1/quanhuyen', quanHuyenApi.index);
