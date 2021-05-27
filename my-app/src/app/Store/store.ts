@@ -4,6 +4,8 @@ import tinhtpSlice from "../Store/tinhtpSlice";
 import quanhuyenSlice from '../Store/quanhuyenSlice';
 import productSlice from '../Store/productSlice';
 import productImageApi from '../Store/productImageSlice';
+import categoryApi from '../Store/categorySlice';
+import brandApi from '../Store/brandSlice';
 
 const store = configureStore({
   reducer: {
@@ -11,7 +13,9 @@ const store = configureStore({
     tinhtp: tinhtpSlice,
     quanhuyen: quanhuyenSlice,
     products: productSlice,
-    productImage: productImageApi
+    productImage: productImageApi,
+    brand: brandApi,
+    category : categoryApi
   },
 });
 

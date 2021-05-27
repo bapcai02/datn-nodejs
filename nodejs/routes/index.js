@@ -11,6 +11,8 @@ var xaPhuongApi = require('../api/xaPhuongAPI');
 var tinhTpApi = require('../api/tinhThanhPhoAPI');
 var productApi = require('../api/productAPI');
 var productImageApi = require('../api/productImageAPI');
+var categoryApi = require('../api/categoryAPI');
+var brandApi = require('../api/brandAPI');
 
 /* GET home page. */
 router.get('/', HomeController.index);
@@ -32,12 +34,27 @@ router.post('/api/v1/product', productApi.index);
 // router.post('/api/v1/product/delete', productApi.delete);
 // router.post('/api/v1/product/search', productApi.search);
 
-/** product api */
+/** product image api */
 router.post('/api/v1/product-image', productImageApi.index);
-// router.post('/api/v1/product/create', productApi.create);
-// router.post('/api/v1/product/update', productApi.update);
-// router.post('/api/v1/product/delete', productApi.delete);
-// router.post('/api/v1/product/search', productApi.search);
+// router.post('/api/v1/product-image/create', productImageApi.create);
+// router.post('/api/v1/product-image/update', productImageApi.update);
+// router.post('/api/v1/product-image/delete', productImageApi.delete);
+// router.post('/api/v1/product-image/search', productImageApi.search);
+
+/** category api */
+router.post('/api/v1/category', categoryApi.index);
+// router.post('/api/v1/category/create', categoryApi.create);
+// router.post('/api/v1/category/update', categoryApi.update);
+// router.post('/api/v1/category/delete', categoryApi.delete);
+// router.post('/api/v1/category/search', categoryApi.search);
+
+/** brand api */
+router.post('/api/v1/brand', brandApi.index);
+// router.post('/api/v1/brand/create', brandApi.create);
+// router.post('/api/v1/brand/update', brandApi.update);
+// router.post('/api/v1/brand/delete', brandApi.delete);
+// router.post('/api/v1/brand/search', brandApi.search);
+
 
 /** quan huyen api */
 router.post('/api/v1/quanhuyen', quanHuyenApi.index);

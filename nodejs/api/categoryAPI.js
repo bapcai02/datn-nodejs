@@ -12,4 +12,28 @@ Category.init({
     created_at: DataTypes.TIME,
     updated_at: DataTypes.TIME,
 
-}, { sequelize, createdAt: false, updatedAt: false, modelName: 'categories'});
+}, { sequelize, createdAt: false, updatedAt: false, modelName: 'categories' });
+
+
+/**
+ * get data
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @response Category
+ */
+exports.index = async(req, res, next) => {
+    await Category.findAll()
+        .then(data => {
+            res.status(200).json({
+                status: 200,
+                message: "success",
+                data: data
+            });
+        }).catch(ExclusionConstraintError => {
+            res.status(400).json({
+                status: 400,
+                message: ExclusionConstraintError
+            });
+        })
+}

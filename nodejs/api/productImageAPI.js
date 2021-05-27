@@ -10,6 +10,7 @@ ProductImage.init({
     updated_at: DataTypes.TIME,
 
 }, { sequelize, createdAt: false, updatedAt: false, modelName: 'product_images' });
+
 /**
  * get data
  * @param {*} req 

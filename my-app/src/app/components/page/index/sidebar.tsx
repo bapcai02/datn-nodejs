@@ -13,7 +13,7 @@ function SideBar(){
             <div id="sidebar-wrapper" data-simplebar data-simplebar-auto-hide="true">
                 <div className="brand-logo">
                     <a href="index.html">
-                        <img src="assets/images/logo-icon.png" className="logo-icon" alt="logo icon" />
+                        <img src="%PUBLIC_URL%/admin/assets/images/logo-icon.png" className="logo-icon" alt="logo icon" />
                         <h5 className="logo-text">Dashtreme Admin</h5>
                     </a>
                 </div>
@@ -26,33 +26,33 @@ function SideBar(){
                     </li>
                     <li>
                         <NavLink to = "/product">
-                            <i className="zmdi zmdi-invert-colors" /> <span>Manage Products</span>
+                            <i className="zmdi zmdi-invert-colors" /> <span>Managre Products</span>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink to = "/user">
-                            <i className="zmdi zmdi-format-list-bulleted" /> <span>Manage Users</span>
+                            <i className="zmdi zmdi-format-list-bulleted" /> <span>Manager Users</span>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink to = "/tinhtp">
-                            <i className="zmdi zmdi-grid" /> <span>Manage Tinh Thanh Pho</span>
+                            <i className="zmdi zmdi-grid" /> <span>Manager Tinh Thanh Pho</span>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink to = "/quanhuyen">
-                            <i className="zmdi zmdi-calendar-check" /> <span>Manage Quan Huyen</span>
+                            <i className="zmdi zmdi-calendar-check" /> <span>Manager Quan Huyen</span>
                         </NavLink>
                     </li>
                     <li>
-                        <a href="profile.html">
-                        <i className="zmdi zmdi-face" /> <span>Profile</span>
-                        </a>
+                        <NavLink to = "/category">
+                            <i className="zmdi zmdi-face" /> <span>Manager Category</span>
+                        </NavLink>
                     </li>
                     <li>
-                        <a href="login.html" target="_blank">
-                        <i className="zmdi zmdi-lock" /> <span>Login</span>
-                        </a>
+                        <NavLink to = "/brand">
+                            <i className="zmdi zmdi-lock" /> <span>Manager Brand</span>
+                        </NavLink>
                     </li>
                     <li>
                         <a href="register.html" target="_blank">
