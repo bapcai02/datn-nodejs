@@ -55,9 +55,9 @@ function SideBar(){
                         </NavLink>
                     </li>
                     <li>
-                        <a href="register.html" target="_blank">
-                        <i className="zmdi zmdi-account-circle" /> <span>Registration</span>
-                        </a>
+                        <NavLink to = "/employer">
+                            <i className="zmdi zmdi-account-circle" /> <span>Manager Employer</span>
+                        </NavLink>
                     </li>
                     <li className="sidebar-header">LABELS</li>
                     <li><a href="javaScript:void();"><i className="zmdi zmdi-coffee text-danger" /> <span>Important</span></a></li>

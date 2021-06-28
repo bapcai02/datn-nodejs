@@ -13,6 +13,7 @@ var productApi = require('../api/productAPI');
 var productImageApi = require('../api/productImageAPI');
 var categoryApi = require('../api/categoryAPI');
 var brandApi = require('../api/brandAPI');
+var employerApi = require('../api/employerAPI');
 
 /* GET home page. */
 router.get('/', HomeController.index);
@@ -43,10 +44,10 @@ router.post('/api/v1/product-image', productImageApi.index);
 
 /** category api */
 router.post('/api/v1/category', categoryApi.index);
-// router.post('/api/v1/category/create', categoryApi.create);
-// router.post('/api/v1/category/update', categoryApi.update);
-// router.post('/api/v1/category/delete', categoryApi.delete);
-// router.post('/api/v1/category/search', categoryApi.search);
+router.post('/api/v1/category/create', categoryApi.create);
+router.post('/api/v1/category/update', categoryApi.update);
+router.post('/api/v1/category/delete', categoryApi.delete);
+router.post('/api/v1/category/search', categoryApi.search);
 
 /** brand api */
 router.post('/api/v1/brand', brandApi.index);
@@ -55,6 +56,12 @@ router.post('/api/v1/brand', brandApi.index);
 // router.post('/api/v1/brand/delete', brandApi.delete);
 // router.post('/api/v1/brand/search', brandApi.search);
 
+/** employer api */
+router.post('/api/v1/employer', employerApi.index);
+// router.post('/api/v1/brand/create', employerApi.create);
+// router.post('/api/v1/brand/update', employerApi.update);
+// router.post('/api/v1/brand/delete', employerApi.delete);
+// router.post('/api/v1/brand/search', employerApi.search);
 
 /** quan huyen api */
 router.post('/api/v1/quanhuyen', quanHuyenApi.index);

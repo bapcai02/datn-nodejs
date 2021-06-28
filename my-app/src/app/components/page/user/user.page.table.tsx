@@ -238,16 +238,16 @@ export default function Table(props:any)
                     <div className="card">
                         <div className="card-body">
                             <div className="table-responsive">
-                            <div className="row mb-3">
-                                <div className="col-12">
-                                    <Button 
-                                        onClick = {newHandleShow} 
-                                        className="btn btn-success btn-sm js-btn-add"
-                                        type="button">
-                                        <span><i className="fa fa-plus mr-1"></i>Thêm mới người dùng</span>
-                                    </Button>
+                                <div className="row mb-3">
+                                    <div className="col-12">
+                                        <Button 
+                                            onClick = {newHandleShow} 
+                                            className="btn btn-success btn-sm js-btn-add"
+                                            type="button">
+                                            <span><i className="fa fa-plus mr-1"></i>Thêm mới người dùng</span>
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
                                 <table id="dt-basic-example" className="table table-bordered table-hover table-striped w-100">
                                     <thead className="bg-primary-600">
                                         <tr>

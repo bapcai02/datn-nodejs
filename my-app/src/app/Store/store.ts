@@ -6,6 +6,7 @@ import productSlice from '../Store/productSlice';
 import productImageApi from '../Store/productImageSlice';
 import categoryApi from '../Store/categorySlice';
 import brandApi from '../Store/brandSlice';
+import employerApi from '../Store/employerSlice';
 
 const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ const store = configureStore({
     products: productSlice,
     productImage: productImageApi,
     brand: brandApi,
-    category : categoryApi
+    category : categoryApi,
+    employer: employerApi
   },
 });
 

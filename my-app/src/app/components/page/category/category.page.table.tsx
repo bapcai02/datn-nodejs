@@ -11,8 +11,11 @@ export default function Table(props: any)
     const dispatch = useDispatch();
     const [pageNumber, setPageNumber] = useState<number>(0);
     const [activePage, setActivePage] = useState<number>(1);
+    const [editModal, setEditModal] = useState(false);
+    const [editEmployer, setEditEmployer] = useState<any>();
+    const [dataEdit, setDataEdit] = useState<any>([]);
     const category: any = useSelector((state: RootState) => state.category);
-console.log(category.list);
+
     useEffect(() => {
         const fetchDataCategory = async () => {
             await dispatch(getCategory());
@@ -36,7 +39,7 @@ console.log(category.list);
                     <td>{value.category_status}</td>
                     <td className="text-center">
                         <Button className="btn btn-sm btn-danger btn-icon btn-inline-block mr-1 waves-effect waves-themed"><i className="fa fa-times"></i></Button>
-                        <Button className="btn btn-sm btn-primary btn-icon btn-inline-block mr-1"><i className="fa fa-edit"></i></Button>
+                        <Button  onClick = {() => showModalEdit(value.id)} className="btn btn-sm btn-primary btn-icon btn-inline-block mr-1"><i className="fa fa-edit"></i></Button>
                     </td>
                 </tbody>
             )
@@ -56,8 +59,88 @@ console.log(category.list);
         setActivePage(selected);
     }
 
+    const handleClose = () => setEditModal(false);
+    const handleShow = () => setEditModal(true);
+
+    const showModalEdit = async (value:number) => {     
+        const list: any = category.list;
+        const data = list.find( (u: any) => u.id === value);
+        setEditEmployer(data);
+        handleShow();
+    }
+ console.log(dataEdit)
     return (
         <div className="container-fluid"> 
+
+            <Modal className="special_modal" show={editModal} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Chỉnh sửa thông tin </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formEmail">
+                            <Form.Label>Tên *</Form.Label>
+                            <Form.Control 
+                                required 
+                                type="text" 
+                                placeholder="Nhập tên thể loại" 
+                                defaultValue = {editEmployer?.category_name}
+                                onChange= {(e) => setDataEdit({
+                                    ...dataEdit,
+                                    name: e.currentTarget.value
+                                })} 
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formName">
+                            <Form.Label>Mô tả *</Form.Label>
+                            <Form.Control 
+                                required   
+                                type="text" 
+                                placeholder="Mô tả" 
+                                defaultValue = {editEmployer?.category_description}
+                                onChange= {(e) => setDataEdit({
+                                    ...dataEdit,
+                                    desc: e.currentTarget.value
+                                })}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formName">
+                            <Form.Label>Key *</Form.Label>
+                            <Form.Control 
+                                required   
+                                type="text" 
+                                placeholder="Từ khóa" 
+                                defaultValue = {editEmployer?.category_keyword}
+                                onChange= {(e) => setDataEdit({
+                                    ...dataEdit,
+                                    keyword: e.currentTarget.value
+                                })}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formName">
+                            <Form.Label>Trạng thái *</Form.Label>
+                            <Form.Control 
+                                required   
+                                type="text" 
+                                placeholder="Trạng thái" 
+                                defaultValue = {editEmployer?.category_status}
+                                onChange= {(e) => setDataEdit({
+                                    ...dataEdit,
+                                    status: e.currentTarget.value
+                                })}
+                            />
+                        </Form.Group>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>Close</Button>
+                            <Button variant="primary" type="submit">Save Changes</Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal.Body>     
+            </Modal>
+
             <div className="row ">
                 <div className="col-md-12">
                     <div className="card">

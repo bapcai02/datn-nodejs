@@ -10,6 +10,7 @@ import TinhTp from '../components/page/tinhthanhpho/tinhtp.page';
 import QuanHuyen from '../components/page/quanhuyen/quanhuyen.page';
 import Brand from '../components/page/brand/brand.page';
 import Category from '../components/page/category/category.page';
+import Employer from '../components/page/employer/employer.page';
 
 export default function App()
 {
@@ -24,6 +25,7 @@ export default function App()
         <Route path="/quanhuyen" component = {QuanHuyen} />
         <Route path="/category" component = {Category} />
         <Route path="/brand" component = {Brand} />
+        <Route path="/employer" component = {Employer} />
       </Switch>
     </div> 
   )
